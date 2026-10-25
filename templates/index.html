@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10101b">
+  <title>Lunchbox Arcade</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Lunchbox Arcade home"><span class="brand-icon">L</span> Lunchbox <span>Arcade</span></a>
+    <div class="online-pill"><span class="dot"></span> Multiplayer arcade</div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">YOUR BREAK. YOUR GAMES.</p>
+      <h1>One link.<br><span>All your friends.</span></h1>
+      <p class="hero-copy">Quick browser games made for playing together. No downloads, just join a room and play.</p>
+    </section>
+
+    <section class="panel setup-panel" id="setup">
+      <div class="panel-heading">
+        <div><p class="eyebrow">PLAYER SETUP</p><h2>Ready to play?</h2></div>
+        <span class="step-number">01</span>
+      </div>
+      <label for="playerName">Your display name</label>
+      <input id="playerName" maxlength="16" placeholder="e.g. PixelWizard" autocomplete="nickname">
+      <div class="action-grid">
+        <button id="createBtn" class="button primary">Create a room <span>↗</span></button>
+        <div class="join-row">
+          <input id="roomCode" maxlength="5" placeholder="ROOM CODE" aria-label="Room code" autocapitalize="characters">
+          <button id="joinBtn" class="button secondary">Join</button>
+        </div>
+      </div>
+      <p class="hint">Rooms are private: share the code with the people you want to play with.</p>
+    </section>
+
+    <section class="panel room-panel hidden" id="roomPanel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">YOUR PRIVATE ROOM</p><h2>Room <span id="roomCodeDisplay" class="code-display">-----</span></h2></div>
+        <button id="copyCodeBtn" class="button secondary small">Copy code</button>
+      </div>
+      <p id="roomStatus" class="room-status">Waiting for players…</p>
+      <div id="playersList" class="players-list"></div>
+      <div class="room-actions">
+        <button id="startBtn" class="button primary">Start Reaction Race</button>
+        <button id="leaveBtn" class="button quiet">Leave room</button>
+      </div>
+      <p class="hint">The host can start when at least 2 players have joined. Maximum 8 players.</p>
+    </section>
+
+    <section class="panel game-panel hidden" id="gamePanel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">GAME 001</p><h2>Reaction Race</h2></div>
+        <span id="roundLabel" class="round-label">Round 1</span>
+      </div>
+      <button id="reactionPad" class="reaction-pad waiting">
+        <span id="reactionEmoji" class="reaction-emoji">⏱️</span>
+        <strong id="reactionMessage">Get ready…</strong>
+        <span id="reactionSub">Wait for the signal, then click as fast as you can.</span>
+      </button>
+      <p id="feedback" class="feedback" aria-live="polite"></p>
+      <div class="scores-heading"><h3>Round results</h3><span>Fastest wins</span></div>
+      <div id="scoresList" class="scores-list"><p class="muted">Your results will appear here.</p></div>
+      <div class="room-actions">
+        <button id="nextBtn" class="button primary hidden">Next round</button>
+        <button id="backBtn" class="button secondary hidden">Back to lobby</button>
+      </div>
+      <p class="hint">Don't click before the screen turns green — early clicks count as a false start.</p>
+    </section>
+
+    <section class="games-section">
+      <div class="section-heading"><div><p class="eyebrow">THE ARCADE</p><h2>Pick your next obsession</h2></div><span class="coming-soon">MORE ON THE WAY</span></div>
+      <div class="game-cards">
+        <article class="game-card featured">
+          <div class="card-art reaction-art"><span>⚡</span><i>3… 2… 1…</i></div>
+          <div class="card-copy"><span class="tag live-tag">PLAYABLE</span><h3>Reaction Race</h3><p>Who has the fastest reflexes? One tiny click decides everything.</p><span class="card-meta">2–8 players · 1 minute</span></div>
+        </article>
+        <article class="game-card">
+          <div class="card-art drawing-art"><span>✏️</span><i>WHAT IS IT?</i></div>
+          <div class="card-copy"><span class="tag">COMING SOON</span><h3>Sketch & Guess</h3><p>Draw something ridiculous while your friends try to guess it.</p><span class="card-meta">2–8 players · Party game</span></div>
+        </article>
+        <article class="game-card">
+          <div class="card-art quiz-art"><span>🧠</span><i>BIG BRAIN TIME</i></div>
+          <div class="card-copy"><span class="tag">COMING SOON</span><h3>Quiz Chaos</h3><p>Quick questions, questionable answers, and a race for points.</p><span class="card-meta">2–8 players · Trivia</span></div>
+        </article>
+      </div>
+    </section>
+    <footer><span>Lunchbox Arcade</span><span>Made for friendly competition.</span></footer>
+  </main>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+  <script src="{{ url_for('static', filename='client.js') }}"></script>
+</body>
+</html>
