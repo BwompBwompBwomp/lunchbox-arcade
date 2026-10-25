@@ -10,85 +10,110 @@
 <body>
   <header class="topbar">
     <a class="brand" href="/" aria-label="Lunchbox Arcade home"><span class="brand-icon">L</span> Lunchbox <span>Arcade</span></a>
-    <div class="online-pill"><span class="dot"></span> Multiplayer arcade</div>
+    <div class="online-pill"><span class="dot"></span> Multiplayer games</div>
   </header>
 
   <main class="page">
     <section class="hero">
-      <p class="eyebrow">YOUR BREAK. YOUR GAMES.</p>
-      <h1>One link.<br><span>All your friends.</span></h1>
-      <p class="hero-copy">Quick browser games made for playing together. No downloads, just join a room and play.</p>
+      <p class="eyebrow">MULTIPLAYER GAMES</p>
+      <h1>Play games<br><span>with friends</span></h1>
+      <p class="hero-copy">Create a room, share the code, and play. No downloads needed.</p>
     </section>
 
     <section class="panel setup-panel" id="setup">
       <div class="panel-heading">
-        <div><p class="eyebrow">PLAYER SETUP</p><h2>Ready to play?</h2></div>
-        <span class="step-number">01</span>
+        <div><p class="eyebrow">PLAYER SETUP</p><h2>Join a game</h2></div>
       </div>
-      <label for="playerName">Your display name</label>
-      <input id="playerName" maxlength="16" placeholder="e.g. PixelWizard" autocomplete="nickname">
+      <label for="playerName">Your name</label>
+      <input id="playerName" maxlength="16" placeholder="Enter your name" autocomplete="nickname">
       <div class="action-grid">
-        <button id="createBtn" class="button primary">Create a room <span>↗</span></button>
+        <button id="createBtn" class="button primary">Create a room</button>
         <div class="join-row">
           <input id="roomCode" maxlength="5" placeholder="ROOM CODE" aria-label="Room code" autocapitalize="characters">
           <button id="joinBtn" class="button secondary">Join</button>
         </div>
       </div>
-      <p class="hint">Rooms are private: share the code with the people you want to play with.</p>
+      <p class="hint">Share the room code with the people you want to play with.</p>
     </section>
 
     <section class="panel room-panel hidden" id="roomPanel">
       <div class="panel-heading">
-        <div><p class="eyebrow">YOUR PRIVATE ROOM</p><h2>Room <span id="roomCodeDisplay" class="code-display">-----</span></h2></div>
+        <div><p class="eyebrow">ROOM</p><h2>Room <span id="roomCodeDisplay" class="code-display">-----</span></h2></div>
         <button id="copyCodeBtn" class="button secondary small">Copy code</button>
       </div>
-      <p id="roomStatus" class="room-status">Waiting for players…</p>
+      <p id="roomStatus" class="room-status">Waiting for players</p>
       <div id="playersList" class="players-list"></div>
+      <div class="game-choice">
+        <h3>Choose a game</h3>
+        <div class="game-choice-buttons">
+          <button class="game-choice-button selected" data-game="reaction-race">Reaction Race</button>
+          <button class="game-choice-button" data-game="knockout">Knockout</button>
+        </div>
+        <p id="gameChoiceHint" class="hint">Click when the screen turns green.</p>
+      </div>
       <div class="room-actions">
         <button id="startBtn" class="button primary">Start Reaction Race</button>
         <button id="leaveBtn" class="button quiet">Leave room</button>
       </div>
-      <p class="hint">The host can start when at least 2 players have joined. Maximum 8 players.</p>
+      <p class="hint">The host starts the game when at least 2 players have joined. Up to 8 players can join.</p>
     </section>
 
     <section class="panel game-panel hidden" id="gamePanel">
       <div class="panel-heading">
-        <div><p class="eyebrow">GAME 001</p><h2>Reaction Race</h2></div>
+        <div><p class="eyebrow">REACTION RACE</p><h2>Reaction Race</h2></div>
         <span id="roundLabel" class="round-label">Round 1</span>
       </div>
       <button id="reactionPad" class="reaction-pad waiting">
         <span id="reactionEmoji" class="reaction-emoji">⏱️</span>
-        <strong id="reactionMessage">Get ready…</strong>
-        <span id="reactionSub">Wait for the signal, then click as fast as you can.</span>
+        <strong id="reactionMessage">Get ready</strong>
+        <span id="reactionSub">Wait for green, then click.</span>
       </button>
       <p id="feedback" class="feedback" aria-live="polite"></p>
-      <div class="scores-heading"><h3>Round results</h3><span>Fastest wins</span></div>
-      <div id="scoresList" class="scores-list"><p class="muted">Your results will appear here.</p></div>
+      <div class="scores-heading"><h3>Results</h3><span>Fastest time wins</span></div>
+      <div id="scoresList" class="scores-list"><p class="muted">Results will appear here.</p></div>
       <div class="room-actions">
         <button id="nextBtn" class="button primary hidden">Next round</button>
-        <button id="backBtn" class="button secondary hidden">Back to lobby</button>
+        <button id="backBtn" class="button secondary hidden">Back to room</button>
       </div>
-      <p class="hint">Don't click before the screen turns green — early clicks count as a false start.</p>
+      <p class="hint">Clicking before green counts as a false start.</p>
+    </section>
+
+    <section class="panel knockout-panel hidden" id="knockoutPanel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">KNOCKOUT</p><h2>Stay on the platform</h2></div>
+        <span id="knockoutTimer" class="round-label">55 seconds</span>
+      </div>
+      <p id="knockoutMessage" class="knockout-message">Move around and push the other players out.</p>
+      <canvas id="knockoutCanvas" width="700" height="420" aria-label="Knockout arena"></canvas>
+      <div class="knockout-controls" aria-label="Movement controls">
+        <button data-dir="up" aria-label="Move up">↑</button>
+        <div class="knockout-horizontal"><button data-dir="left" aria-label="Move left">←</button><button data-dir="down" aria-label="Move down">↓</button><button data-dir="right" aria-label="Move right">→</button></div>
+      </div>
+      <p class="hint">Move with WASD or the arrow keys. On a phone, use the buttons. Push other players out and stay inside the shrinking circle.</p>
+      <div class="room-actions">
+        <button id="knockoutAgainBtn" class="button primary hidden">Play again</button>
+        <button id="knockoutBackBtn" class="button secondary hidden">Back to room</button>
+      </div>
     </section>
 
     <section class="games-section">
-      <div class="section-heading"><div><p class="eyebrow">THE ARCADE</p><h2>Pick your next obsession</h2></div><span class="coming-soon">MORE ON THE WAY</span></div>
+      <div class="section-heading"><div><p class="eyebrow">GAMES</p><h2>Available games</h2></div></div>
       <div class="game-cards">
         <article class="game-card featured">
-          <div class="card-art reaction-art"><span>⚡</span><i>3… 2… 1…</i></div>
-          <div class="card-copy"><span class="tag live-tag">PLAYABLE</span><h3>Reaction Race</h3><p>Who has the fastest reflexes? One tiny click decides everything.</p><span class="card-meta">2–8 players · 1 minute</span></div>
+          <div class="card-art reaction-art"><span>⚡</span><i>WAIT FOR GREEN</i></div>
+          <div class="card-copy"><span class="tag live-tag">AVAILABLE</span><h3>Reaction Race</h3><p>Click as soon as the screen turns green. Lowest time wins.</p><span class="card-meta">2–8 players · Short rounds</span></div>
+        </article>
+        <article class="game-card featured">
+          <div class="card-art knockout-art"><span>●</span><i>STAY ON</i></div>
+          <div class="card-copy"><span class="tag live-tag">AVAILABLE</span><h3>Knockout</h3><p>Move around the platform and push other players off before it gets too small.</p><span class="card-meta">2–8 players · Movement game</span></div>
         </article>
         <article class="game-card">
-          <div class="card-art drawing-art"><span>✏️</span><i>WHAT IS IT?</i></div>
-          <div class="card-copy"><span class="tag">COMING SOON</span><h3>Sketch & Guess</h3><p>Draw something ridiculous while your friends try to guess it.</p><span class="card-meta">2–8 players · Party game</span></div>
-        </article>
-        <article class="game-card">
-          <div class="card-art quiz-art"><span>🧠</span><i>BIG BRAIN TIME</i></div>
-          <div class="card-copy"><span class="tag">COMING SOON</span><h3>Quiz Chaos</h3><p>Quick questions, questionable answers, and a race for points.</p><span class="card-meta">2–8 players · Trivia</span></div>
+          <div class="card-art drawing-art"><span>✏️</span><i>DRAW</i></div>
+          <div class="card-copy"><span class="tag">NOT AVAILABLE YET</span><h3>Sketch & Guess</h3><p>One person draws while everyone else guesses the word.</p><span class="card-meta">Party game</span></div>
         </article>
       </div>
     </section>
-    <footer><span>Lunchbox Arcade</span><span>Made for friendly competition.</span></footer>
+    <footer><span>Lunchbox Arcade</span><span>Made for playing together.</span></footer>
   </main>
   <div id="toast" class="toast hidden" role="status"></div>
   <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
