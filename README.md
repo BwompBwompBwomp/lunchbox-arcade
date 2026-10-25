@@ -1,56 +1,35 @@
-# Lunchbox Arcade — Python edition
+# Lunchbox Arcade
 
-A starter multiplayer browser arcade. The backend is Python (Flask + Flask-SocketIO). No Node.js and no VS Code required.
+A small multiplayer browser arcade. The backend uses Python, Flask and Flask-SocketIO. No Node.js or local code editor is required.
 
-## Easiest way to work on it: GitHub in your browser
+## Games
 
-1. Download and extract the ZIP.
-2. Sign in to GitHub in your browser and create a new repository, for example `lunchbox-arcade`.
-3. On the repository page, use **Add file → Upload files**.
-4. Upload the project files and folders, preserving this layout:
-   - `app.py`
-   - `requirements.txt`
-   - `render.yaml`
-   - `templates/index.html`
-   - `static/client.js`
-   - `static/styles.css`
-5. Commit the files.
-6. In Render, create a new Web Service and connect the repository. Render can also use `render.yaml` to set up the service.
-7. If configuring manually:
-   - Runtime: Python
-   - Build command: `pip install -r requirements.txt`
-   - Start command: `gunicorn --worker-class gthread --threads 100 --bind 0.0.0.0:$PORT app:app`
-8. Deploy and open the generated `onrender.com` URL.
+- **Reaction Race:** click after the screen turns green. The lowest reaction time wins.
+- **Knockout:** move with WASD or the arrow keys and push players off a shrinking circular platform. Mobile users can use the on-screen controls.
 
-## No local editor required
+Both games support 2–8 players in a private room. The host chooses the game and starts the round.
 
-You can make changes using GitHub's browser-based file editor or upload replacement files, then commit. Render automatically redeploys after commits when connected to the repository.
+## Updating the existing GitHub repository
 
-## Optional local test
+If you already deployed an earlier Lunchbox Arcade version, replace these four files using GitHub in your browser:
 
-If Python is installed and you want to test locally, use a terminal in this folder:
+1. `app.py` (repository root)
+2. `templates/index.html` (inside `templates`)
+3. `static/client.js` (inside `static`)
+4. `static/styles.css` (inside `static`)
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python app.py
-```
+For each file, open the matching folder in your GitHub repository, choose **Add file → Upload files**, and upload the replacement file from this ZIP. Commit the changes. If GitHub asks you to confirm replacing an existing file, confirm it. Render should deploy the commit automatically if auto-deploy is enabled; otherwise use **Manual Deploy → Deploy latest commit**.
 
-Then open http://localhost:10000. This is optional; you can deploy from the browser without using VS Code.
+Keep `requirements.txt` and `render.yaml` from the existing project; they do not need to change for this update.
 
-## Features
+## Render settings
 
-- Python server and Flask-SocketIO live multiplayer
-- Create/join private rooms with five-character codes
-- 2–8 players per room
-- Host-controlled Reaction Race with round results
-- Responsive homepage with additional game ideas
-- `/health` endpoint
+- Runtime: Python
+- Build command: `pip install -r requirements.txt`
+- Start command: `gunicorn --worker-class gthread --threads 100 --bind 0.0.0.0:$PORT app:app`
 
-## Limitations of this first version
+## Notes
 
-- Rooms live in server memory and are cleared on a server restart.
-- No accounts or permanent leaderboards yet.
-- Render's free web services may spin down while inactive.
-- The first version uses one process and is intended for a small private hobby project.
+- Rooms are stored in server memory and disappear when the service restarts.
+- This starter is intended for a small private group on one running server instance.
+- Free Render services may spin down while idle.
